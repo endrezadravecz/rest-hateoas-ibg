@@ -1,11 +1,13 @@
 package com.endrezadravecz.rest;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 
 import java.util.Arrays;
 
 class DatabaseLoader {
 
+    @Bean
     CommandLineRunner initDatabase(EmployeeRepository employeeRepository, ManagerRepository managerRepository) {
         return args -> {
 
