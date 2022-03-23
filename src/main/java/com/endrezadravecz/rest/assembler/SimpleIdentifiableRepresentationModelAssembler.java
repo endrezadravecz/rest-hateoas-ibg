@@ -1,4 +1,4 @@
-package com.endrezadravecz.rest;
+package com.endrezadravecz.rest.assembler;
 
 import lombok.Getter;
 import lombok.Setter;

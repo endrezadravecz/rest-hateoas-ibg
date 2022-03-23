@@ -1,5 +1,10 @@
-package com.endrezadravecz.rest;
+package com.endrezadravecz.rest.controller;
 
+import com.endrezadravecz.rest.assembler.EmployeeRepresentationModelAssembler;
+import com.endrezadravecz.rest.assembler.EmployeeWithManagerResourceAssembler;
+import com.endrezadravecz.rest.db.repository.EmployeeRepository;
+import com.endrezadravecz.rest.model.Employee;
+import com.endrezadravecz.rest.model.EmployeeWithManager;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Links;
@@ -15,6 +20,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+public
 class EmployeeController {
 
     private final EmployeeRepository repository;

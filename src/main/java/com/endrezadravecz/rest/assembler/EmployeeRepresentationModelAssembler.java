@@ -1,5 +1,9 @@
-package com.endrezadravecz.rest;
+package com.endrezadravecz.rest.assembler;
 
+import com.endrezadravecz.rest.controller.EmployeeController;
+import com.endrezadravecz.rest.controller.ManagerController;
+import com.endrezadravecz.rest.controller.RootController;
+import com.endrezadravecz.rest.model.Employee;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Component;
@@ -8,7 +12,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
-class EmployeeRepresentationModelAssembler extends SimpleIdentifiableRepresentationModelAssembler<Employee> {
+public class EmployeeRepresentationModelAssembler extends SimpleIdentifiableRepresentationModelAssembler<Employee> {
 
     EmployeeRepresentationModelAssembler() {
         super(EmployeeController.class);

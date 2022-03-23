@@ -1,5 +1,9 @@
-package com.endrezadravecz.rest;
+package com.endrezadravecz.rest.assembler;
 
+import com.endrezadravecz.rest.controller.EmployeeController;
+import com.endrezadravecz.rest.controller.ManagerController;
+import com.endrezadravecz.rest.controller.RootController;
+import com.endrezadravecz.rest.model.EmployeeWithManager;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.SimpleRepresentationModelAssembler;
@@ -9,7 +13,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
-class EmployeeWithManagerResourceAssembler implements SimpleRepresentationModelAssembler<EmployeeWithManager> {
+public class EmployeeWithManagerResourceAssembler implements SimpleRepresentationModelAssembler<EmployeeWithManager> {
 
     @Override
     public void addLinks(EntityModel<EmployeeWithManager> resource) {

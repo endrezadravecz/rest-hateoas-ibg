@@ -1,5 +1,8 @@
-package com.endrezadravecz.rest;
+package com.endrezadravecz.rest.controller;
 
+import com.endrezadravecz.rest.assembler.ManagerRepresentationModelAssembler;
+import com.endrezadravecz.rest.db.repository.ManagerRepository;
+import com.endrezadravecz.rest.model.Manager;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-class ManagerController {
+public class ManagerController {
 
     private final ManagerRepository repository;
     private final ManagerRepresentationModelAssembler assembler;
@@ -19,9 +22,8 @@ class ManagerController {
     }
 
     @GetMapping("/managers")
-    ResponseEntity<CollectionModel<EntityModel<Manager>>> findAll() {
+    public ResponseEntity<CollectionModel<EntityModel<Manager>>> findAll() {
         return ResponseEntity.ok(assembler.toCollectionModel(repository.findAll()));
-
     }
 
     @GetMapping("/managers/{id}")
@@ -30,7 +32,7 @@ class ManagerController {
     }
 
     @GetMapping("/employees/{id}/manager")
-    ResponseEntity<EntityModel<Manager>> findManager(@PathVariable long id) {
+    public ResponseEntity<EntityModel<Manager>> findManager(@PathVariable long id) {
         return ResponseEntity.ok(assembler.toModel(repository.findByEmployeesId(id)));
     }
 }

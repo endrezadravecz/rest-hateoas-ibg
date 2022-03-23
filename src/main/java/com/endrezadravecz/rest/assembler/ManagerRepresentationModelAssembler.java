@@ -1,5 +1,9 @@
-package com.endrezadravecz.rest;
+package com.endrezadravecz.rest.assembler;
 
+import com.endrezadravecz.rest.controller.EmployeeController;
+import com.endrezadravecz.rest.controller.ManagerController;
+import com.endrezadravecz.rest.controller.RootController;
+import com.endrezadravecz.rest.model.Manager;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Component;
@@ -8,7 +12,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
-class ManagerRepresentationModelAssembler extends SimpleIdentifiableRepresentationModelAssembler<Manager> {
+public class ManagerRepresentationModelAssembler extends SimpleIdentifiableRepresentationModelAssembler<Manager> {
 
     ManagerRepresentationModelAssembler() {
         super(ManagerController.class);

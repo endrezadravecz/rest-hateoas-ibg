@@ -1,4 +1,4 @@
-package com.endrezadravecz.rest;
+package com.endrezadravecz.rest.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -7,28 +7,27 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Data
 @Entity
 @NoArgsConstructor
-class Employee {
+public class Manager {
 
     @Id
     @GeneratedValue
     private Long id;
     private String name;
-    private String role;
 
     @JsonIgnore
-    @OneToOne
-    private Manager manager;
+    @OneToMany(mappedBy = "manager")
+    private List<Employee> employees = new ArrayList<>();
 
-    Employee(String name, String role, Manager manager) {
+    public Manager(String name) {
         this.name = name;
-        this.role = role;
-        this.manager = manager;
     }
 
     public Optional<Long> getId() {

@@ -1,4 +1,4 @@
-package com.endrezadravecz.rest;
+package com.endrezadravecz.rest.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

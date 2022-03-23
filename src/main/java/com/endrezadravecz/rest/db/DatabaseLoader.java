@@ -1,5 +1,9 @@
-package com.endrezadravecz.rest;
+package com.endrezadravecz.rest.db;
 
+import com.endrezadravecz.rest.db.repository.EmployeeRepository;
+import com.endrezadravecz.rest.db.repository.ManagerRepository;
+import com.endrezadravecz.rest.model.Employee;
+import com.endrezadravecz.rest.model.Manager;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;

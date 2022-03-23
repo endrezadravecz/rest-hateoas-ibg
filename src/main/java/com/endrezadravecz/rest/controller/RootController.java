@@ -1,4 +1,4 @@
-package com.endrezadravecz.rest;
+package com.endrezadravecz.rest.controller;
 
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +9,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+public
 class RootController {
 
     @GetMapping("/")
-    ResponseEntity<RepresentationModel> root() {
+    public ResponseEntity<RepresentationModel> root() {
 
         RepresentationModel model = new RepresentationModel();
 
