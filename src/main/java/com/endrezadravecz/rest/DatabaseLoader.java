@@ -13,21 +13,21 @@ class DatabaseLoader {
     CommandLineRunner initDatabase(EmployeeRepository employeeRepository, ManagerRepository managerRepository) {
         return args -> {
 
-            Manager gandalf = managerRepository.save(new Manager("Gandalf"));
+            Manager gary = managerRepository.save(new Manager("Gary"));
 
-            Employee frodo = employeeRepository.save(new Employee("Frodo", "ring bearer", gandalf));
-            Employee bilbo = employeeRepository.save(new Employee("Bilbo", "burglar", gandalf));
+            Employee al = employeeRepository.save(new Employee("Al Bundy", "shoe salesman", gary));
+            Employee griff = employeeRepository.save(new Employee("Griff", "associate shoe salesman", gary));
 
-            gandalf.setEmployees(Arrays.asList(frodo, bilbo));
-            managerRepository.save(gandalf);
+            gary.setEmployees(Arrays.asList(al, griff));
+            managerRepository.save(gary);
 
-            Manager saruman = managerRepository.save(new Manager("Saruman"));
+            Manager mrShimokawa = managerRepository.save(new Manager("Mr. Shimokawa"));
 
-            Employee sam = employeeRepository.save(new Employee("Sam", "gardener", saruman));
+            Employee marcy = employeeRepository.save(new Employee("Marcy D'Arcy", "branch manager", mrShimokawa));
 
-            saruman.setEmployees(Arrays.asList(sam));
+            mrShimokawa.setEmployees(Arrays.asList(marcy));
 
-            managerRepository.save(saruman);
+            managerRepository.save(mrShimokawa);
         };
     }
 }

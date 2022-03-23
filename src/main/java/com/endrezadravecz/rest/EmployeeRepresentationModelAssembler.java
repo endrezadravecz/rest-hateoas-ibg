@@ -22,7 +22,6 @@ class EmployeeRepresentationModelAssembler extends SimpleIdentifiableRepresentat
         resource.getContent().getId().ifPresent(id -> {
             resource.add(linkTo(methodOn(ManagerController.class).findManager(id)).withRel("manager"));
             resource.add(linkTo(methodOn(EmployeeController.class).findDetailedEmployee(id)).withRel("detailed"));
-            resource.add(linkTo(methodOn(SupervisorController.class).findOne(id)).withRel("supervisor"));
         });
     }
 
