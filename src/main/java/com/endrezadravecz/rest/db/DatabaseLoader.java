@@ -11,12 +11,11 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
 @Component
-class DatabaseLoader {
+public class DatabaseLoader {
 
     @Bean
     CommandLineRunner initDatabase(EmployeeRepository employeeRepository, ManagerRepository managerRepository) {
         return args -> {
-
             Manager gary = managerRepository.save(new Manager("Gary"));
 
             Employee al = employeeRepository.save(new Employee("Al Bundy", "shoe salesman", gary));

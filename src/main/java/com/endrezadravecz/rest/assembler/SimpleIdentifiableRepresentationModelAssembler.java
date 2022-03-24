@@ -31,7 +31,6 @@ public class SimpleIdentifiableRepresentationModelAssembler<T> implements Simple
     private String basePath = "";
 
     public SimpleIdentifiableRepresentationModelAssembler(Class<?> controllerClass, LinkRelationProvider relProvider) {
-
         this.controllerClass = controllerClass;
         this.relProvider = relProvider;
         this.resourceType = GenericTypeResolver.resolveTypeArgument(this.getClass(), SimpleIdentifiableRepresentationModelAssembler.class);
@@ -42,7 +41,6 @@ public class SimpleIdentifiableRepresentationModelAssembler<T> implements Simple
     }
 
     public void addLinks(EntityModel<T> resource) {
-
         resource.add(getCollectionLinkBuilder().slash(getId(resource)).withSelfRel());
         resource.add(getCollectionLinkBuilder().withRel(this.relProvider.getCollectionResourceRelFor(this.resourceType)));
     }
