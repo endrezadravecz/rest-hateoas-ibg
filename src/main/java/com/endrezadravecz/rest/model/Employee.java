@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import java.util.Optional;
 
 @Data
@@ -18,11 +18,13 @@ public class Employee {
     @Id
     @GeneratedValue
     private Long id;
+
     private String name;
+
     private String role;
 
     @JsonIgnore
-    @OneToOne
+    @ManyToOne
     private Manager manager;
 
     public Employee(String name, String role, Manager manager) {

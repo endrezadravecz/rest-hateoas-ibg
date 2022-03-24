@@ -2,13 +2,15 @@ package com.endrezadravecz.rest.controller;
 
 import com.endrezadravecz.rest.assembler.ManagerRepresentationModelAssembler;
 import com.endrezadravecz.rest.db.repository.ManagerRepository;
+import com.endrezadravecz.rest.dto.ManagerCreationDTO;
 import com.endrezadravecz.rest.model.Manager;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 public class ManagerController {
@@ -24,6 +26,13 @@ public class ManagerController {
     @GetMapping("/managers")
     public ResponseEntity<CollectionModel<EntityModel<Manager>>> findAll() {
         return ResponseEntity.ok(assembler.toCollectionModel(repository.findAll()));
+    }
+
+    @PostMapping("/managers")
+    public ResponseEntity<Object> createManager(@RequestBody ManagerCreationDTO manager) {
+        final Manager savedManager = repository.save(new Manager(manager.getName()));
+        final URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedManager.getId()).toUri();
+        return ResponseEntity.created(location).build();
     }
 
     @GetMapping("/managers/{id}")

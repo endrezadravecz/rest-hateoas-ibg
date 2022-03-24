@@ -9,13 +9,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-public
-class RootController {
+public class RootController {
 
     @GetMapping("/")
     public ResponseEntity<RepresentationModel> root() {
 
-        RepresentationModel model = new RepresentationModel();
+        final RepresentationModel model = new RepresentationModel();
 
         model.add(linkTo(methodOn(RootController.class).root()).withSelfRel());
         model.add(linkTo(methodOn(EmployeeController.class).findAll()).withRel("employees"));
