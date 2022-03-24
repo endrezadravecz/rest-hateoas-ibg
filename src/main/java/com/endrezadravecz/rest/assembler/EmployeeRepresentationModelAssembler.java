@@ -25,7 +25,6 @@ public class EmployeeRepresentationModelAssembler extends SimpleIdentifiableRepr
 
         resource.getContent().getId().ifPresent(id -> {
             resource.add(linkTo(methodOn(ManagerController.class).findManager(id)).withRel("manager"));
-            resource.add(linkTo(methodOn(EmployeeController.class).findDetailedEmployee(id)).withRel("detailed"));
         });
     }
 
@@ -34,7 +33,6 @@ public class EmployeeRepresentationModelAssembler extends SimpleIdentifiableRepr
 
         super.addLinks(resources);
 
-        resources.add(linkTo(methodOn(EmployeeController.class).findAllDetailedEmployees()).withRel("detailedEmployees"));
         resources.add(linkTo(methodOn(ManagerController.class).findAll()).withRel("managers"));
         resources.add(linkTo(methodOn(RootController.class).root()).withRel("root"));
     }

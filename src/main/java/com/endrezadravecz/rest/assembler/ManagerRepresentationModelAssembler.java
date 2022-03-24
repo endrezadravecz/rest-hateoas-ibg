@@ -33,7 +33,6 @@ public class ManagerRepresentationModelAssembler extends SimpleIdentifiableRepre
         super.addLinks(resources);
 
         resources.add(linkTo(methodOn(EmployeeController.class).findAll()).withRel("employees"));
-        resources.add(linkTo(methodOn(EmployeeController.class).findAllDetailedEmployees()).withRel("detailedEmployees"));
         resources.add(linkTo(methodOn(RootController.class).root()).withRel("root"));
     }
 }

@@ -18,7 +18,6 @@ public class RootController {
 
         model.add(linkTo(methodOn(RootController.class).root()).withSelfRel());
         model.add(linkTo(methodOn(EmployeeController.class).findAll()).withRel("employees"));
-        model.add(linkTo(methodOn(EmployeeController.class).findAllDetailedEmployees()).withRel("detailedEmployees"));
         model.add(linkTo(methodOn(ManagerController.class).findAll()).withRel("managers"));
 
         return ResponseEntity.ok(model);
