@@ -12,6 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 public class ManagerController {
@@ -39,6 +40,18 @@ public class ManagerController {
     @GetMapping("/managers/{id}")
     ResponseEntity<EntityModel<Manager>> findOne(@PathVariable long id) {
         return repository.findById(id).map(assembler::toModel).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/managers/{id}")
+    public ResponseEntity<EntityModel<Manager>> replaceManager(@Valid @RequestBody ManagerCreationDTO manager, @PathVariable long id) {
+        final Optional<Manager> optionalManager = repository.findById(id);
+        if (optionalManager.isPresent()) {
+            final Manager savedManager = optionalManager.get();
+            savedManager.setName(manager.getName());
+            repository.save(savedManager);
+            return ResponseEntity.ok(assembler.toModel(savedManager));
+        }
+        return createManager(manager);
     }
 
     @GetMapping("/employees/{id}/manager")

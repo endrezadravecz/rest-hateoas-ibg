@@ -57,6 +57,26 @@ public class EmployeeController {
         return employeeRepository.findById(id).map(assembler::toModel).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @PutMapping("/employees/{id}")
+    public ResponseEntity<EntityModel<Employee>> replaceEmployee(@Valid @RequestBody EmployeeCreationDTO employee, @PathVariable long id) throws EntityNotFoundException {
+        final Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+        if (optionalEmployee.isPresent()) {
+            final Optional<Manager> manager = managerRepository.findById(employee.getManagerId());
+            if (manager.isPresent()) {
+                final Employee savedEmployee = optionalEmployee.get();
+                savedEmployee.setName(employee.getName());
+                savedEmployee.setRole(employee.getRole());
+                savedEmployee.setManager(manager.get());
+                employeeRepository.save(savedEmployee);
+                return ResponseEntity.ok(assembler.toModel(savedEmployee));
+            } else {
+                throw new EntityNotFoundException("Manager with id " + employee.getManagerId() + " was not found.");
+            }
+        } else {
+            return createEmployee(employee);
+        }
+    }
+
     @GetMapping("/managers/{id}/employees")
     public ResponseEntity<CollectionModel<EntityModel<Employee>>> findEmployees(@PathVariable long id) {
         CollectionModel<EntityModel<Employee>> collectionModel = assembler.toCollectionModel(employeeRepository.findByManagerId(id));
