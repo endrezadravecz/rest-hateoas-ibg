@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -29,10 +30,10 @@ public class ManagerController {
     }
 
     @PostMapping("/managers")
-    public ResponseEntity<Object> createManager(@RequestBody ManagerCreationDTO manager) {
+    public ResponseEntity<EntityModel<Manager>> createManager(@Valid @RequestBody ManagerCreationDTO manager) {
         final Manager savedManager = repository.save(new Manager(manager.getName()));
         final URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedManager.getId()).toUri();
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(assembler.toModel(savedManager));
     }
 
     @GetMapping("/managers/{id}")

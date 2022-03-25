@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.Optional;
 
@@ -38,13 +39,13 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees")
-    public ResponseEntity<Object> createEmployee(@RequestBody EmployeeCreationDTO employee) {
+    public ResponseEntity<EntityModel<Employee>> createEmployee(@Valid @RequestBody EmployeeCreationDTO employee) {
         final Optional<Manager> manager = managerRepository.findById(employee.getManagerId());
         if (manager.isPresent()) {
             final Employee convertedEmployee = new Employee(employee.getName(), employee.getRole(), manager.get());
             final Employee savedEmployee = employeeRepository.save(convertedEmployee);
             final URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedEmployee.getId()).toUri();
-            return ResponseEntity.created(location).build();
+            return ResponseEntity.created(location).body(assembler.toModel(savedEmployee));
         }
         return ResponseEntity.badRequest().build();
     }
