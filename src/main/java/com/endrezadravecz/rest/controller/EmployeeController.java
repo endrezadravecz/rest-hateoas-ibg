@@ -4,11 +4,13 @@ import com.endrezadravecz.rest.assembler.EmployeeRepresentationModelAssembler;
 import com.endrezadravecz.rest.db.repository.EmployeeRepository;
 import com.endrezadravecz.rest.db.repository.ManagerRepository;
 import com.endrezadravecz.rest.dto.EmployeeCreationDTO;
+import com.endrezadravecz.rest.exception.EntityNotFoundException;
 import com.endrezadravecz.rest.model.Employee;
 import com.endrezadravecz.rest.model.Manager;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Links;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -39,7 +41,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees")
-    public ResponseEntity<EntityModel<Employee>> createEmployee(@Valid @RequestBody EmployeeCreationDTO employee) {
+    public ResponseEntity<EntityModel<Employee>> createEmployee(@Valid @RequestBody EmployeeCreationDTO employee) throws EntityNotFoundException {
         final Optional<Manager> manager = managerRepository.findById(employee.getManagerId());
         if (manager.isPresent()) {
             final Employee convertedEmployee = new Employee(employee.getName(), employee.getRole(), manager.get());
@@ -47,7 +49,7 @@ public class EmployeeController {
             final URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedEmployee.getId()).toUri();
             return ResponseEntity.created(location).body(assembler.toModel(savedEmployee));
         }
-        return ResponseEntity.badRequest().build();
+        throw new EntityNotFoundException("Manager with id " + employee.getManagerId() + " was not found.");
     }
 
     @GetMapping("/employees/{id}")
@@ -60,6 +62,11 @@ public class EmployeeController {
         CollectionModel<EntityModel<Employee>> collectionModel = assembler.toCollectionModel(employeeRepository.findByManagerId(id));
         Links newLinks = collectionModel.getLinks().merge(Links.MergeMode.REPLACE_BY_REL, linkTo(methodOn(EmployeeController.class).findEmployees(id)).withSelfRel());
         return ResponseEntity.ok(CollectionModel.of(collectionModel.getContent(), newLinks));
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }
